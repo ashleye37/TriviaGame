@@ -19,29 +19,31 @@
         </header>
 
         <div class="row">
-            <div class="col-md-12" id="instructions">
+            <div class="col-md-11" id="instructions">
                 <ol>
                     <h5><li>Click the start button to begin the trivia game.</li></h5>
                     <h5><li>Answer each question displayed correctly before the timer expires!</li></h5>
                     <h5><li>When you complete all the questions or when the timer expires you will see how you did!</li></h5>
                 </ol>
             </div>
+            <div class="col-md-5" id="startButton"><button type="button" class="btn btn-secondary btn-lg">Start 90s Trivia!</button></div>
+            <div class="col-md-5" id="timer"> <h2>Timer: 00:10 </h2></div>
         </div>
-
-        <div class="row">
-            <div class="col-md-12" id="startButton"><button type="button" class="btn btn-secondary btn-lg btn-block">Start 90s Trivia!</button></div>
-        </div> 
-
-        <div class="container">
-                <div class="row">
-                    <div class="col-md-4"> <h5>Timer:</h5></div>
-                    <div class="col-md-8"><h5>Question:</h5></div>
-                </div>
             
-                <div class="row">
-                    <div class="col-md-4" id="displayImage"></div>
-                    <div class="col-md-8" id="questionDisplay">Question Placeholder</div>
+        <div class="row">
+            <div class="col-md-4" id="displayImage"><img src="assets/images/faceQuestion.png"></div>
+            <div class="col-md-8" id="alerts"></div>
+            <div class="col-md-8" id="questionDIV">
+                <h2 class="col-md-12" id="questionDisplay"></h2>
+
+                <div class="col-md-12" id="questionChoices">
+                <button type="button" class= "btn btn-secondary checkAnswer" id="choice1"></button>
+                <button type="button" class= "btn btn-secondary checkAnswer" id="choice2"></button>
+                <button type="button" class= "btn btn-secondary checkAnswer" id="choice3"></button>
+                <button type="button" class= "btn btn-secondary checkAnswer" id="choice4"></button>
                 </div>
+            </div>
+            
         </div>
     </div>
 
