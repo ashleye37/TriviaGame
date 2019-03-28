@@ -22,22 +22,40 @@ h1 {
     border: ridge;
     border-color: goldenrod;
     padding: 10px;
-    margin: 20px;
-    margin-left: 40px;
-    margin-bottom: 0rem;
+    margin-left: 80px;
     align-content: center;
 }
 
+ol {
+    margin-top: 10px;
+    margin-left: 40px;
+}
+
 #startButton {
-    margin: 10px;
+    margin: 20px;
     text-align: center;
 }
 
 #timer {
     text-align: center;
+    margin: 20px;
+
 }
 
-#imageDisplay {
-    padding: 20px;
+#displayImage {
+    padding-left: 60px;
     text-align: center;
+}
+
+#alerts {
+    border: ridge;
+    border-color: goldenrod;
+    padding: 10px;
+    margin-left: 80px;
+    align-content: center;
+    text-align: center;
+}
+
+#questionChoices {
+    padding: 20px;
 }

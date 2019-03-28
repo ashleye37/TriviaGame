@@ -77,51 +77,106 @@ $(document).ready(function() {
             answer: "Toll Booth Worker"
         }
     ];
+
     $("#questionDIV").hide();
     $("#alerts").hide();
 
-    //Starts the Trivia Game and displays the questions.
+    // Starts the Trivia Game and displays the questions.
     $("#startButton").on("click", function startTimer() {
         currentQuestion = triviaQuestions[0];
         displayQuestion(currentQuestion);
         $("#questionDIV").show();
+        $("#instructions").hide();
+        correctAnswers = [];
+        incorrectAnswers = [];
+        currentQuestionIndex = 0;
     });
 
+    // Displays the next question in the game and hides the previous alert.
     function displayQuestion(arg) {
+        setTimer();
+        $("#alerts").hide();
         $("#questionDisplay").html(arg.question);
         $("#choice1").html(arg.choices[0]);
         $("#choice2").html(arg.choices[1]);
         $("#choice3").html(arg.choices[2]);
-        $("#choice4").html(arg.choices[3]);
-        
-        clearInterval(timer);
-        timer = setInterval (countDown, 1000);
-        function countDown() {
-            counter--;
-            $("#timer").html("<h2> Timer: 00:" + counter + "</h2>");
-            if (counter === 0) {
-                clearInterval(timer);
-                $("#questionDIV").hide();
-                $("#alerts").html("<h2> Time is up! You did not answer before the timer ran out! </h2>");
-                $("#alerts").show();
-            }; 
-        };
+        $("#choice4").html(arg.choices[3]); 
     };
 
+    //Sets the timer for the game.
+    function setTimer() {
+        counter = 11;
+        clearInterval(timer);
+        timer = setInterval (countDown, 1000);
+    };
+
+    //Sets the count down for the timer after it has been set.
+    function countDown() {
+        counter--;
+        $("#timer").html("<h2> Timer: 00:" + counter + "</h2>");
+        timeOut();
+    };
+
+    //Displays alert that the player is correct when function is called.
+    function yourRight() {
+        $("#alerts").html("<h2> You are correct! </h2>");
+        $("#alerts").show();
+        stopTimer();
+        setTimeout(function(){nextQuestion()}, 1000);
+        correctAnswers.push(currentQuestion);
+    };
+    
+    //Displays alert that the player is incorrect or ran out of time when function is called.
+    function yourWrong(updateAlert) {
+        if (updateAlert) {
+            $("#alerts").html("<h2> The timer ran out! The correct answer was " + currentQuestion.answer + "</h2>");
+            $("#alerts").show();
+            stopTimer();
+            setTimeout(function(){nextQuestion()}, 1000);
+            incorrectAnswers.push(currentQuestion);
+        } else {
+        $("#alerts").html("<h2> You are incorrect! The correct answer was " + currentQuestion.answer + "</h2>");
+        $("#alerts").show();
+        stopTimer();
+        setTimeout(function(){nextQuestion()}, 1000);
+        incorrectAnswers.push(currentQuestion);
+        };    
+    };
+
+    //Checks to see if the answer is correct or not and uses the correct function.
     $(".checkAnswer").on("click", function checkAnswer () {
         if (this.innerHTML === currentQuestion.answer) {
-            $("#alert").html("<h2> You are correct! </h2>");
-            correctAnswers.push(currentQuestion);
+            yourRight();
         }
         if (this.innerHTML !== currentQuestion.answer) {
-            $("#alert").html("<h2> You are incorrect! </h2>");
-            incorrectAnswers.push(currentQuestion);
+            yourWrong();
         }
-        currentQuestion = triviaQuestions[currentQuestionIndex + 1];
-        currentQuestionIndex++;
-        displayQuestion(currentQuestion);
     });
 
-    
+    //Moves game to the next trivia question when called and hides or shows alerts.
+    function nextQuestion(){
+        $("#alerts").hide();
+        currentQuestion = triviaQuestions[currentQuestionIndex + 1];
+        currentQuestionIndex++;
+        if (currentQuestionIndex >= 10) {
+            $("#alerts").html("<h2> Nice job! Click the Start 90s Trivia button to play again! <br> Questions Correct: " + correctAnswers.length + " <br> Questions Incorrect: " + incorrectAnswers.length + " </h2>");
+            $("#alerts").show();
+            stopTimer();
+        } else {
+        displayQuestion(currentQuestion);
+        };
+    };
+
+    //Funtion that will run the correct your wrong alert if the timer runs out.
+    function timeOut() {
+        if (counter === 0) {
+            yourWrong(true);
+        }; 
+    };
+
+    //Completely stops the timer.
+    function stopTimer() {
+        clearInterval(timer);
+    }
 
 });
